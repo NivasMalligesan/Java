@@ -46,3 +46,107 @@ public class Main
 }
 
 ****************************************************************************************************************************************************************************
+
+Search, Leaves Count , Root Balanced 
+import java.util.*;
+class BinaryTree{
+    class Node{
+        int data;
+        Node right,left;
+        Node(int data){
+            this.data = data;
+            right = null;
+            left = null;
+        }
+    }
+        int index = -1;
+        public Node binaryTreeBuilder(int [] nodes){
+            index++;
+            if(nodes[index] == -1){
+                return null;
+            }
+            Node newNode = new Node(nodes[index]);
+            newNode.left = binaryTreeBuilder(nodes);
+            newNode.right = binaryTreeBuilder(nodes);
+            
+            return newNode;            
+        }
+        
+        public int countNode (Node node){
+            if(node == null){
+                return 0;
+            }
+            int leftNode = countNode(node.left);
+            int rightNode = countNode(node.right);
+            
+            return leftNode+rightNode + 1;
+        }
+        public int height(Node node){
+            if(node == null){
+                return 0;
+            }
+            int leftHeight = height(node.left);
+            int rightHeight = height(node.right);
+            
+            return Math.max(leftHeight,rightHeight) + 1;
+        }
+        public boolean isBalanced(Node node){
+            if(node == null){
+                return true;
+            }
+            int leftHeight = height(node.left);
+            int rightHeight = height(node.right);
+            if(Math.abs(leftHeight-rightHeight) <= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        
+        public int CountLeaves(Node node){
+            if(node == null) return 0;
+            if(node.left == null && node.right == null) return 1;
+            
+            int CCL = CountLeaves(node.left);
+            int CCR = CountLeaves(node.right);
+            return CCL + CCR;
+        }
+        
+        public boolean search(int target,Node node){
+            if(node == null){
+                return false;
+            }
+            if(node.data == target){
+                return true;
+            }
+            boolean searchleft = search(target , node.left);
+            boolean searchRight = search(target , node.right);
+            
+            return searchleft || searchRight ;
+        }
+        
+        public void printNode(Node node){
+            if(node != null){
+                System.out.print(node.data+" ");
+                printNode(node.left);
+                printNode(node.right);
+            }
+        }
+        
+}
+public class Main
+{
+	public static void main(String[] args) {
+	    int[] nodes = {1, 2, 4, -1, -1, 5, -1, -1, 3, 6, -1, -1, 7, -1, -1};
+		BinaryTree bt = new BinaryTree();
+		BinaryTree.Node node = bt.binaryTreeBuilder(nodes);
+		bt.printNode(node);
+		System.out.println();
+		System.out.println("Count Node " +bt.countNode(node));
+		System.out.println("Count Leaves "+bt.CountLeaves(node));
+		System.out.println("Node present ? :  "+bt.search(6,node));
+		System.out.println("Node Height ? :  "+bt.height(node));
+		System.out.println("Node Height ? :  "+bt.isBalanced(node));
+	}
+}
