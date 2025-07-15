@@ -150,3 +150,47 @@ public class Main
 		System.out.println("Node Height ? :  "+bt.isBalanced(node));
 	}
 }
+
+**********************************************************************************************************************
+
+N ary Tree
+import java.util.*;
+class Node{
+    int data;
+    List <Node> child;
+    Node(int data){
+        this.data = data;
+        child = new ArrayList<>();
+    }
+}
+class NaryTree{
+        Node root = null;
+        NaryTree(int val){
+            root = new Node(val);
+        }
+        public void insert(Node node , int val){
+            Node newNode = new Node(val);
+            node.child.add(newNode);
+        }
+        public void preOrder(Node node){
+            if(node == null) return;
+            System.out.print(node.data+" ");
+            for(Node i : node.child){
+                preOrder(i);
+            }
+        }
+}
+public class Main
+{
+	public static void main(String[] args) {
+		NaryTree nt = new NaryTree(10);
+		Node root = nt.root;
+		nt.insert(root,20);
+		nt.insert(root,30);
+		nt.insert(root,40);
+		nt.insert(root,50);
+		nt.insert(root.child.get(1),60);
+		nt.insert(root.child.get(1),70);
+		nt.preOrder(root);
+	}
+}
