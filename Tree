@@ -259,3 +259,71 @@ public class Main
 		bt.PreOrderDisplay(root);
 	}
 }
+
+
+********************************************************************************************************************************
+Building Tree with Post Order and In order
+
+class Node{
+    int data;
+    Node right;
+    Node left;
+    Node(int val){
+        data= val;
+        left = null;
+        right = null;
+    }
+}
+
+class BinaryTree{
+    int postIndex;
+    Node root = null;
+    public int Indexfinder(int [] inOrder, int startIndex ,int  endIndex,int target){
+        for(int i = startIndex ; i<= endIndex ; i++){
+            if(target == inOrder[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public Node TreeBuilderHelper(int[] postOrder,int [] inOrder,int startIndex ,int endIndex){
+        
+        if(startIndex > endIndex){
+            return null;
+        }
+        
+        int rootValue = postOrder[postIndex--];
+        Node rootNode = new Node(rootValue);
+        int inIndex = Indexfinder(inOrder ,startIndex , endIndex, rootValue);
+        rootNode.right = TreeBuilderHelper(postOrder,inOrder,inIndex+1,endIndex);
+        rootNode.left = TreeBuilderHelper(postOrder,inOrder,startIndex,inIndex-1);
+        
+        return rootNode;
+    }
+    
+    public Node TreeBuilder(int[] postOrder,int [] inOrder){
+        postIndex =inOrder.length-1;
+        Node root = TreeBuilderHelper(postOrder,inOrder,0,inOrder.length-1);
+        return root;
+    }
+    
+    public void PostOrderDisplay(Node node){
+        if(node == null) return ;
+        PostOrderDisplay(node.left);
+        PostOrderDisplay(node.right);
+        System.out.print(node.data+" ");
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		int [] postOrder = {2,3,1};
+		int [] inOrder  = {2,1,3};
+
+		BinaryTree bt = new BinaryTree();
+		Node root =bt.TreeBuilder(postOrder,inOrder);
+		bt.PostOrderDisplay(root);
+	}
+}
