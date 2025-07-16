@@ -194,3 +194,68 @@ public class Main
 		nt.preOrder(root);
 	}
 }
+*******************************************************************************************************************************************************************
+Building a Tree with PreOrder and InOrder Array
+
+class Node{
+    int data;
+    Node right;
+    Node left;
+    Node(int val){
+        data= val;
+        left = null;
+        right = null;
+    }
+}
+
+class BinaryTree{
+    int preIndex = 0;
+    Node root = null;
+    public int Indexfinder(int [] inOrder, int startIndex ,int  endIndex,int target){
+        for(int i = startIndex ; i<= endIndex ; i++){
+            if(target == inOrder[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public Node TreeBuilderHelper(int[] preOrder,int [] inOrder,int startIndex ,int endIndex){
+        
+        if(startIndex > endIndex){
+            return null;
+        }
+        
+        int rootValue = preOrder[preIndex++];
+        Node rootNode = new Node(rootValue);
+        int inIndex = Indexfinder(inOrder ,startIndex , endIndex, rootValue);
+        rootNode.left = TreeBuilderHelper(preOrder,inOrder,startIndex,inIndex-1);
+        rootNode.right = TreeBuilderHelper(preOrder,inOrder,inIndex+1,endIndex);
+        
+        return rootNode;
+    }
+    
+    public Node TreeBuilder(int[] preOrder,int [] inOrder){
+        Node root = TreeBuilderHelper(preOrder,inOrder,0,inOrder.length-1);
+        return root;
+    }
+    
+    public void PreOrderDisplay(Node node){
+        if(node == null) return ;
+        System.out.print(node.data+" ");
+        PreOrderDisplay(node.left);
+        PreOrderDisplay(node.right);
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		int []preOrder = {10, 12, 3, 4, 5, 6};
+		int [] inOrder  = {3, 12, 10, 5, 4, 6};
+
+		BinaryTree bt = new BinaryTree();
+		Node root =bt.TreeBuilder(preOrder,inOrder);
+		bt.PreOrderDisplay(root);
+	}
+}
