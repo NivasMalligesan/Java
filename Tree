@@ -327,3 +327,158 @@ public class Main
 		bt.PostOrderDisplay(root);
 	}
 }
+
+
+********************************************************************************************************************************************************************
+
+Binary Search Tree : 
+Insert With recursion 
+
+class Node{
+    int data;
+    Node right, left;
+    Node(int val){
+        data = val;
+        right = left = null;
+    }
+}
+
+class BinarySearchTree{
+    Node root;
+    BinarySearchTree(int val){
+        root = new Node(val);
+    }
+    public void insert(int value){
+        root = insertHelper(root,value);
+    }
+    
+    public Node insertHelper(Node node, int value){
+        if(node == null){
+            Node newNode = new Node(value);
+            return newNode;
+        }
+        if(value < node.data){
+            node.left = insertHelper(node.left,value);
+        }else{
+            node.right = insertHelper(node.right,value);
+        }
+        return node;
+    }
+    
+    public boolean search(Node node,int target){
+        if(node == null) return false;
+        if(node.data == target) return true;
+        if(target < node.data){
+            return search(node.left,target);
+        }else{
+            return search(node.right,target);
+        }
+        // return false;
+    }
+    
+    public void PrintInorder(Node node){
+        if(node == null){
+            return;
+        }
+        
+        PrintInorder(node.left);
+        System.out.print(node.data+" ");
+        PrintInorder(node.right);
+        
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		BinarySearchTree BST = new BinarySearchTree(50);
+		BST.insert(10);
+		BST.insert(60);
+		BST.insert(600);
+		BST.insert(100);
+		Node root = BST.root;insert
+	    BST.PrintInorder(root);
+	    System.out.println(BST.search(root,10));
+	}
+}
+
+
+********************************************************************************************************************************************************************
+
+Binary Search Tree : 
+Insert With Iteration 
+
+class Node{
+    int data;
+    Node right, left;
+    Node(int val){
+        data = val;
+        right = left = null;
+    }
+}
+
+class BinarySearchTree{
+    Node root;
+    BinarySearchTree(int val){
+        root = new Node(val);
+    }
+    public void insert(int value){
+        Node newNode = new Node(value);
+        Node traversal = root;
+        while(traversal!= null){
+            if(traversal.data > value){
+                if(traversal.left == null){
+                    traversal.left = newNode;
+                    break;
+                }else{
+                    traversal = traversal.left;
+                }
+            }else{
+                if(traversal.right == null){
+                    traversal.right = newNode;
+                    break;
+                }else{
+                    traversal = traversal.right;
+                }
+            }
+        }
+    }
+    
+    
+    public boolean search(Node node,int target){
+        if(node == null) return false;
+        if(node.data == target) return true;
+        if(target < node.data){
+            return search(node.left,target);
+        }else{
+            return search(node.right,target);
+        }
+        // return false;
+    }
+    
+    public void PrintInorder(Node node){
+        if(node == null){
+            return;
+        }
+        
+        PrintInorder(node.left);
+        System.out.print(node.data+" ");
+        PrintInorder(node.right);
+        
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		BinarySearchTree BST = new BinarySearchTree(50);
+		BST.insert(10);
+		BST.insert(60);
+		BST.insert(600);
+		BST.insert(100);
+		Node root = BST.root;
+	    BST.PrintInorder(root);
+	    System.out.println(BST.search(root,10));
+	}
+}
+
